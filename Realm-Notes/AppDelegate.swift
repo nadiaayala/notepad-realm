@@ -7,15 +7,33 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let realm = try! Realm()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+//        let note = Note()
+//        note.title = "using RealmINHO"
+//
+//        do {
+//
+//            print("working")
+//            print(realm)
+//        }
+//
+//        catch {
+//            print("Error initialising Realm: \(error)")
+//        }
+        
         return true
     }
 
