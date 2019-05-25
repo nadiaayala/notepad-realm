@@ -41,7 +41,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="HFi-RZ-bZm">
                             <connections>
-                                <action selector="editButtonPressed:" destination="wKX-4X-3R9" id="yhl-Gk-QKX"/>
+                                <action selector="editButtonPressed:" destination="wKX-4X-3R9" id="lsT-kq-bi4"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -81,7 +81,7 @@
                     <navigationItem key="navigationItem" title="Notepad" id="cQR-E4-IYn">
                         <barButtonItem key="rightBarButtonItem" title="Item" systemItem="edit" id="SAh-KC-OmY">
                             <connections>
-                                <action selector="editButtonPressed:" destination="nWU-oU-Z8w" id="PtC-xH-Zyy"/>
+                                <action selector="editButtonPressed:" destination="nWU-oU-Z8w" id="kDT-EM-ESH"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

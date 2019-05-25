@@ -15,6 +15,28 @@ class NotesViewController: UITableViewController {
         load()
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            if let note = notes?[indexPath.row] {
+            do{
+                try realm.write{
+                    realm.delete(note)
+                    load()
+          }
+        }
+            catch let error {
+                print("Error: \(error)")
+            }
+    }
+    }
+    }
+    
+    
+    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+        
+    }
+    
     
     //MARK: - ADD NEW NOTE
 
@@ -97,6 +119,7 @@ class NotesViewController: UITableViewController {
     
     func load() {
         notes = realm.objects(Note.self)
+        tableView.reloadData()
     }
 }
 
