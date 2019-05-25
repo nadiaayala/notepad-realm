@@ -8,38 +8,17 @@ class NotesViewController: UITableViewController {
     var notes: Results<Note>?
     
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         load()
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if (editingStyle == .delete) {
-            // handle delete (by removing the data from your array and updating the tableview)
-            if let note = notes?[indexPath.row] {
-            do{
-                try realm.write{
-                    realm.delete(note)
-                    load()
-          }
-        }
-            catch let error {
-                print("Error: \(error)")
-            }
-    }
-    }
-    }
-    
-    
-    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
-        
-    }
-    
+ 
     
     //MARK: - ADD NEW NOTE
-
+    
     @IBAction func addNotePressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         
@@ -101,9 +80,18 @@ class NotesViewController: UITableViewController {
         
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            // handle delete (by removing the data from your array and updating the tableview)
+            if let note = notes?[indexPath.row] {
+                delete(noteToDelete: note)
+            }
+        }
+    }
     
     
-    //MARK: - SAVE NEW NOTE TO REALM
+    
+    //MARK: - MANAGE DATA WITH REALM
     
     func save(noteToSave: Note){
         
@@ -116,6 +104,21 @@ class NotesViewController: UITableViewController {
             print("Error: \(error)")
         }
     }
+    
+    
+    func delete(noteToDelete: Note){
+        do{
+            try realm.write{
+                realm.delete(noteToDelete)
+                load()
+            }
+        }
+        catch let error {
+            print("Error: \(error)")
+        }
+    }
+    
+    
     
     func load() {
         notes = realm.objects(Note.self)
