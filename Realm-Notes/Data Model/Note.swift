@@ -11,4 +11,5 @@ import RealmSwift
 
 class Note: Object {
     @objc dynamic var title: String = ""
+    @objc dynamic var date: Date = Date()
 }

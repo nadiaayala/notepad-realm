@@ -18,7 +18,7 @@ class NotesViewController: UITableViewController {
     }
     
     @IBOutlet weak var uiSearchBar: UISearchBar!
- 
+    
     
     //MARK: - ADD NEW NOTE
     
@@ -31,6 +31,17 @@ class NotesViewController: UITableViewController {
             if textField.text != "" {
                 let note = Note()
                 note.title = textField.text!
+                
+                let dateFormatter : DateFormatter = DateFormatter()
+                //        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                dateFormatter.dateFormat = "yyyy-MMM-dd HH:mm:ss"
+                let date = Date()
+                let dateString = dateFormatter.string(from: date)
+                note.date = date
+//                let interval = date.timeIntervalSince1970
+//
+                
+                print(date)
                 self.save(noteToSave: note)
                 self.load()
                 
@@ -125,38 +136,32 @@ class NotesViewController: UITableViewController {
     
     func load() {
         notes = realm.objects(Note.self)
+        notes = notes?.sorted(byKeyPath: "date", ascending: false)
         tableView.reloadData()
     }
     
-    
-    
-    
 }
-    
+
 
 
 extension NotesViewController: UISearchBarDelegate {
     
-    
-    
-    
+ 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        notes = notes?.filter("title CONTAINS[cd] %@", searchBar.text!)
+        notes = notes?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "date", ascending: false)
         tableView.reloadData()
         
     }
-//
+    //
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
-            print("zero")
-
             load()
-
+            
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }
-
-
+            
+            
         }
     }
 }
