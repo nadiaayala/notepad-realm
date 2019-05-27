@@ -12,9 +12,12 @@ class NotesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.uiSearchBar.delegate = self
+        
         load()
     }
     
+    @IBOutlet weak var uiSearchBar: UISearchBar!
  
     
     //MARK: - ADD NEW NOTE
@@ -124,5 +127,36 @@ class NotesViewController: UITableViewController {
         notes = realm.objects(Note.self)
         tableView.reloadData()
     }
+    
+    
+    
+    
 }
+    
 
+
+extension NotesViewController: UISearchBarDelegate {
+    
+    
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        notes = notes?.filter("title CONTAINS[cd] %@", searchBar.text!)
+        tableView.reloadData()
+        
+    }
+//
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            print("zero")
+
+            load()
+
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+
+
+        }
+    }
+}
